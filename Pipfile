@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[requires]
+python_version = "3.5"
+
+[packages]
+django = "*"
+gunicorn = "*"
+"fa64277" = {path = "/home/mad/projects/django-open-humans", editable = true}
+django-heroku = "*"
