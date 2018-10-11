@@ -2,10 +2,14 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
+from django.views.decorators.csrf import csrf_exempt
 
 from openhumans.models import OpenHumansMember
+
+from .models import OverlandUser
 
 
 def index(request):
@@ -34,3 +38,22 @@ def logout_user(request):
         logout(request)
     redirect_url = settings.LOGOUT_REDIRECT_URL
     return redirect(redirect_url)
+
+
+@csrf_exempt
+def receiver(request, token):
+    """
+    Endpoint for receiving Overland data
+    """
+    try:
+        oluser = OverlandUser.objects.get(endpoint_token=token)
+        print('------------------')
+        print('IN RECEIVER FOR {0}'.format(oluser.oh_member.oh_id))
+        print(request.method)
+        if request.method == 'POST':
+            print(request.body)
+        print('------------------')
+        return HttpResponse('In receive: OH ID is {0}'.format(
+            oluser.oh_member.oh_id))
+    except OverlandUser.DoesNotExist:
+        return HttpResponse('In receiver: no user')
