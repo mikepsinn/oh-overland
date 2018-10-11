@@ -7,8 +7,9 @@ verify_ssl = true
 django = "*"
 django-open-humans = "*"
 django-heroku = "*"
+gunicorn = "*"
 
 [requires]
-python_version = "3.5"
+python_version = "3.6.6"
 
 [dev-packages]
