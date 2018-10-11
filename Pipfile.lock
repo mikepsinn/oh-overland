@@ -68,10 +68,10 @@
         },
         "django-open-humans": {
             "hashes": [
-                "sha256:60816f10f959c7d803741689341e918f9ac5462f39a38542af306c5a63f176f9"
+                "sha256:9465c0d51a1b66d66d958e7f8d5000d8db7cedd9f27eddff387947aff4509b68"
             ],
             "index": "pypi",
-            "version": "==0.1.1"
+            "version": "==0.1.2.1"
         },
         "gunicorn": {
             "hashes": [
