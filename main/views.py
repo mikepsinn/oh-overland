@@ -1,4 +1,5 @@
 import io
+import urllib
 
 from django.conf import settings
 from django.contrib import messages
@@ -29,6 +30,10 @@ def index(request):
                           ' file!</b>'))
 
     context = {'auth_url': auth_url}
+    if request.user.is_authenticated:
+        context['overland_endpoint'] = urllib.parse.urljoin(
+            settings.OPENHUMANS_APP_BASE_URL,
+            request.user.openhumansmember.overlanduser.endpoint_token)
     return render(request, 'main/index.html', context=context)
 
 
