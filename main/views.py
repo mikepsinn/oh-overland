@@ -1,3 +1,5 @@
+import io
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -51,7 +53,14 @@ def receiver(request, token):
         print('IN RECEIVER FOR {0}'.format(oluser.oh_member.oh_id))
         print(request.method)
         if request.method == 'POST':
-            print(request.body)
+            stream = io.BytesIO(request.body)
+            metadata = {
+                'tags': ['GPS', 'location', 'json'],
+                'description': 'Overland GPS data batch'}
+            oluser.oh_member.upload(
+                stream=stream, filename='overland-data.json',
+                metadata=metadata)
+            print('FILE CREATED')
         print('------------------')
         return HttpResponse('In receive: OH ID is {0}'.format(
             oluser.oh_member.oh_id))
