@@ -2,23 +2,84 @@
 
 {% block main %}
 
-<h1 class="mt-5">Open Humans Template</h1>
+<h1 class="mt-5">Overland Connect</h1>
 
 {% if not request.user.is_authenticated %}
-<p>
-  You're not logged in.
-</p>
-<a href="{{ auth_url }}" class="btn btn-primary">
-  Connect to Open Humans
-</a>
+<div class="row">
+  <div class="col-md">
+    <p>
+      Connect to your <i>Open Humans</i> account to start collecting your location data with <i>Overland</i> on your iPhone.
+    </p>
+    <a href="{{ auth_url }}" class="btn btn-primary">
+      Connect to Open Humans
+    </a>
+  </div>
+  <div class="col-md">
+    <h2>What is <i>Overland</i>?</h2>
+    <a href='https://overland.p3k.app/'>Overland</a> is a <a href='https://overland.p3k.app/download'>free iOS app</a>
+    that tracks your location and sends your data to a server of your choosing. It is highly configurable to allow you to
+    preserve your privacy or battery life if you wish to do so!
+    <h2>What does this website do?</h2>
+    If you log in with your <i>Open Humans</i> account we create a server endpoint that allows you to import your <i>Overland</i> location data right into your <i>Open Humans</i> account.
+    <h2>Will <i>Open Humans</i> make my location data publicly available?</h2>
+    The short answer: No. The long answer: If you want to, you can make data sets publicly available on <i>Open Humans</i>, but you can always keep data private.
+  </div>
+</div>
 {% else %}
-<p>
-  Logged in!
-</p>
-<p>
-  To push data you need to give Overland the following URL:<br>
-  <pre>{{ overland_endpoint }}</pre>
-</p>
+
+<div class="row">
+  <div class="col-md">
+    <h3>Your Overland data</h3>
+    {%if overland_file%}
+    <p>You already have Overland Location Data in your Open Humans account</p>
+    <p><a href="{{ overland_file }}" class="btn btn-primary">
+      Download your Data
+    </a></p>
+    {%else%}
+    <p>You don't have any Overland data in your Open Humans account so far.
+      Follow the steps below to start recording data:</p>
+    {%endif%}
+    <p>
+      To push data from the <i>Overland</i> app on your phone to <i>Open Humans</i> you need to use the following URL as the <i>Receiver Endpoint</i> in the <i>Overland</i>:<br>
+      <code name='overland_url'>{{ overland_endpoint }}</code>
+      <button id="copy" class='btn btn-primary'>Copy URL</button>
+    </p>
+    <p>
+      If you are on your computer right now and want to open these instructions on your iPhone you can scan the QR code
+      below by just using the <i>Camera</i> app on your phone.
+    </p>
+    <p>
+      The resulting website that will open contains all the information you will need.
+    </p>
+    <p>
+      <div id="qrcode"></div>
+      <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+      <script type="text/javascript">
+        new QRCode(document.getElementById("qrcode"), "{{ overland_endpoint }}");
+      </script>
+    </p>
+  </div>
+  <div class="col-md">
+    <h2>
+      Setting up <i>Overland</i> on your <i>iPhone</i>
+    </h2>
+  </p>
+    After you have copied your personal Overland endpoint URL you can enter it in your Overland app on your phone:
+    <ul>
+      <li>Open the <i>Overland</i></li>
+      <li>Open the <i>Settings</i> menu by clicking on the bottom right button</li>
+      <li>On the top click on <i>Set Receiver Endpoint URL</i></li>
+      <li>Paste the URL you copied from the left</li>
+      <li>Press <i>Save</i></li>
+      <li>You are done now. Don't forget to turn on <i>Tracking Enabled</i></li>
+    </ul>
+    {% load static %}
+    <img width="49%" src="{% static 'img/howto1.jpg'%}"/>
+    <img width="49%" src="{% static 'img/howto2.jpg'%}"/>
+  </p>
+  </div>
+
+
 {% endif %}
 
 {% endblock main %}

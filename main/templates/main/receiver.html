@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<h1 class="mt-5">How to set up Overland on your phone</h1>
+<div class="row">
+  <div class="col-md-6">
+    <p>
+      To push data from the <i>Overland</i> app on your phone to <i>Open Humans</i> you need to use the following URL as the <i>Receiver Endpoint</i> in the <i>Overland</i>:<br>
+      <code name='overland_url'>{{ overland_endpoint }}</code>
+      <button id="copy" class='btn btn-primary'>Copy URL</button>
+    </p>
+    </p>
+      <button id="copy" class='btn btn-primary'>Copy URL</button>
+    </p>
+  </div>
+  <div class="col-md-6">
+    </p>
+      After you have copied your personal Overland endpoint URL you can enter it in your Overland app on your phone:
+      <ul>
+        <li>Open the <i>Overland</i></li>
+        <li>Open the <i>Settings</i> menu by clicking on the bottom right button</li>
+        <li>On the top click on <i>Set Receiver Endpoint URL</i></li>
+        <li>Paste the URL you copied from the left</li>
+        <li>Press <i>Save</i></li>
+        <li>You are done now. Don't forget to turn on <i>Tracking Enabled</i></li>
+      </ul>
+      {% load static %}
+      <img width="49%" src="{% static 'img/howto1.jpg'%}"/>
+      <img width="49%" src="{% static 'img/howto2.jpg'%}"/>
+    </p>
+  </div>
+</div>
+
+{% endblock main %}

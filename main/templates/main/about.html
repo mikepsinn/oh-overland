@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <h2>About</h2>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Who's running <i>Overland Connect</i>?</h3>
+          </div>
+          <div class="panel-body">
+          <p>
+            This project is run by
+            <a href="https://openhumansfoundation.org/">the Open Humans Foundation</a>.
+            You can always get in touch with it via email at <a href="mailto:support@openhumans.org">email</a> at <code>support@openhumans.org</code>.
+
+            <a href='https://www.openhumans.org/activity/overland-connection/'>See this project's activity page on Open Humans</a>.
+          </p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Which data do you store?</h3>
+          </div>
+          <div class="panel-body">
+          <p>
+            We store different kinds of data depending on whether you are accessing this app as a guest
+            or if you are being logged in with your Open Humans account:
+          </p>
+          <ol>
+            <li>Generally, our hoster <i><a href='https://www.heroku.com'>Heroku</a></i> stores and gives us access to</li>
+            <ol>
+              <li>IP addresses used to access this app</li>
+              <li>the sub-pages visited on this app</li>
+              <li>(Both are stored for up to a week)</li>
+            </ol>
+            <li>By logging in with your <i>Open Humans</i> account we can access:</li>
+            <ol>
+              <li>Overland location archives generated through this app itself</li>
+              <li>(You can always review this app's permissions <a href='https://www.openhumans.org/activity/overland-connection/'>on Open Humans</a>)</li>
+            </ol>
+            <li>If you push <i>Overland</i> location data to the <code>endpoint</code> created for you, we can access the location data sent from <i>Overland</i>, including:</li>
+            <ol>
+              <li>Your location (latitude, longitude, altitude, speed)</li>
+              <li>The accuracy of your location data points</li>
+              <li>Information on whether you are moving and how</li>
+              <li>Battery information about your phone</li>
+              <li>If you are logged into a WiFi and if yes, it's SSID/name.</li>
+            </ol>
+            <li>Overland Connect will store:</li>
+            <ol>
+              <li>your random Open Humans identifier that's unrelated to your username on Open Humans</li>
+              <li>the authentication credentials that allow us to read & write your Overland data on Open Humans</li>
+            </ol>
+          </ol>
+          <p>
+            Overland Connect is covered by Open Humans' <a href='https://www.openhumans.org/terms/'>Terms of Use</a> and
+            <a href='https://www.openhumans.org/data-use/'>Data Use Policy</a>:
+          </p>
+          <p>
+            You can always <a href='https://www.openhumans.org/activity/overland-connection/'>deauthorize this application on the <i>Open Humans</i> settings of this application</a>.
+            This will invalidate the credentials used to read and write data to your <i>Open Humans</i> account. You should then also remove/change the <code>receiver endpoint</code>
+            in your <i>Overland</i> app to make sure that you don't sent us more location data.
+          </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <h2>FAQ</h2>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">What does this application do?</h3>
+          </div>
+          <div class="panel-body">
+            <p>
+              With this application you can create an API endpoint for the <i>Overland</i> iOS app to push your location data into your <i>Open Humans</i> account.
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">How does it work?</h3>
+          </div>
+          <div class="panel-body">
+          <p>
+            You can log-in into this application with your <i>Open Humans</i> account. This allows us to deposit data in your <i>Open Humans</i> account.
+            Logging in also creates a unique URL that you can use as the `receiver endpoint` in the <i>Overland</i> iOS application. Everytime you then push data from the iOS app to this endpoint we will
+            add this data to your growing <i>Overland</i> location history record on <i>Open Humans</i>.
+          </p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Where do I get Overland?</h3>
+          </div>
+          <div class="panel-body">
+          <p>
+            <a href='https://overland.p3k.app/download'>You can download <i>Overland</i> on the App Store</a>, it is free!
+          </p>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">How do I set up this connection?</h3>
+          </div>
+          <div class="panel-body">
+          <p>
+            Once you have logged in you will get your personal Overland <code>receiver endpoint</code> URL.
+            Copy this URL and enter it in your Overland app on your phone:
+            <ul>
+              <li>Open the <i>Overland</i></li>
+              <li>Open the <i>Settings</i> menu by clicking on the bottom right button</li>
+              <li>On the top click on <i>Set Receiver Endpoint URL</i></li>
+              <li>Paste the URL you copied from the left</li>
+              <li>Press <i>Save</i></li>
+              <li>You are done now. Don't forget to turn on <i>Tracking Enabled</i></li>
+            </ul>
+            {% load static %}
+            <img width="49%" src="{% static 'img/howto1.jpg'%}"/>
+            <img width="49%" src="{% static 'img/howto2.jpg'%}"/>
+          </p>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

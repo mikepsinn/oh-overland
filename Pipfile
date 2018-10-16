@@ -8,8 +8,10 @@ django = "*"
 django-open-humans = "*"
 django-heroku = "*"
 gunicorn = "*"
+celery = "*"
+redis = "*"
 
 [requires]
-python_version = "3.6.6"
+python_version = "3.6"
 
 [dev-packages]

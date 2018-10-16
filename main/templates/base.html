@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="images/favicon.ico">
 
-    <title>{% block title %}Open Humans Template{% endblock title %}</title>
+    <title>{% block title %}Overland Connect{% endblock title %}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -24,7 +24,7 @@
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">OH template</a>
+        <a class="navbar-brand" href="/">Overland Connect</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,16 +48,21 @@
           -->
           <ul class="navbar-nav mr-auto">
           </ul>
-          {% if not request.user.is_authenticated %}
-          <a href="{{ auth_url }}" class="btn btn-primary">
-            Log in
-          </a>
-          {% else %}
-          <form class="form-inline mt-2 mt-md-0" action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="btn btn-secondary" type="submit">Log out</button>
-          </form>
-          {% endif %}
+          <ul class='navbar-nav ml-auto'>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'about' %}">About/FAQ</a>
+            </li>
+            {% if not request.user.is_authenticated %}
+            <a href="{{ auth_url }}" class="btn btn-primary">
+              Log in
+            </a>
+            {% else %}
+            <form class="form-inline mt-2 mt-md-0" action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button class="btn btn-secondary" type="submit">Log out</button>
+            </form>
+            {% endif %}
+          </ul>
         </div>
       </nav>
     </header>
@@ -72,7 +77,7 @@
 
     <footer class="footer">
       <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+        <span class="text-muted"><a href="https://www.openhumans.org/">Explore Yourself</a>.</span>
       </div>
     </footer>
 
@@ -80,6 +85,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{% static 'vendor/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
   </body>
