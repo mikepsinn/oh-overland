@@ -8,7 +8,7 @@
 <div class="row">
   <div class="col-md">
     <p>
-      Connect to your <i>Open Humans</i> account to start collecting your location data with <i>Overland</i> on your iPhone.
+      Connect to your <i>Open Humans</i> account to store location data from the <i>Overland</i> iPhone app.
     </p>
     <a href="{{ auth_url }}" class="btn btn-primary">
       Connect to Open Humans
@@ -16,13 +16,33 @@
   </div>
   <div class="col-md">
     <h2>What is <i>Overland</i>?</h2>
+    <p>
     <a href='https://overland.p3k.app/'>Overland</a> is a <a href='https://overland.p3k.app/download'>free iOS app</a>
-    that tracks your location and sends your data to a server of your choosing. It is highly configurable to allow you to
-    preserve your privacy or battery life if you wish to do so!
+    that tracks your location and sends your data to a server of your choosing. It is highly configurable to help you
+    preserve privacy and battery life, if you wish to do so!
+    </p>
+    <p>
+      Overland's data includes:
+    </p>
+    <ul>
+      <li>Your continuous location data (latitude and longitude)</li>
+      <li>Wifi network names</li>
+      <li>Battery status</li>
+    </ul>
     <h2>What does this website do?</h2>
-    If you log in with your <i>Open Humans</i> account we create a server endpoint that allows you to import your <i>Overland</i> location data right into your <i>Open Humans</i> account.
+    <p>
+    If you log in with your <i>Open Humans</i> account you can use this app to transfer your <i>Overland</i> location data to your <i>Open Humans</i> account.
+    </p>
+    <p>This project is run by <a href="https://openhumansfoundation.org/">the Open Humans Foundation</a> and governed by the
+      <a href="https://www.openhumans.org/terms/">Open Humans terms of use</a>.
+    </p>
+    <p>
+      You can read more about its code, operation, and data management in our <a href='{% url 'about' %}'>About/FAQ page</a>.</p>
     <h2>Will <i>Open Humans</i> make my location data publicly available?</h2>
-    The short answer: No. The long answer: If you want to, you can make data sets publicly available on <i>Open Humans</i>, but you can always keep data private.
+    <p>
+    The short answer: No.<br>
+    The long answer: Data is private by default. If you want to, you can opt to make data sets publicly available on <i>Open Humans</i> and/or share it with other projects, but you can always keep data private.
+    </p>
   </div>
 </div>
 {% else %}
@@ -61,7 +81,7 @@
   </div>
   <div class="col-md">
     <h2>
-      Setting up <i>Overland</i> on your <i>iPhone</i>
+      Set up <i>Overland</i> on your <i>iPhone</i>
     </h2>
   </p>
     After you have copied your personal Overland endpoint URL you can enter it in your Overland app on your phone:

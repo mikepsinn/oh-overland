@@ -16,6 +16,7 @@
 
     <!-- Custom styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/open-humans-theming.css' %}">
 
   </head>
 
@@ -23,10 +24,10 @@
 
     <header>
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <nav class="navbar navbar-expand-md navbar-open-humans fixed-top">
         <a class="navbar-brand" href="/">Overland Connect</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon custom-toggler"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <!-- bootstrap sample navbar below
@@ -59,7 +60,7 @@
             {% else %}
             <form class="form-inline mt-2 mt-md-0" action="{% url 'logout' %}" method="post">
               {% csrf_token %}
-              <button class="btn btn-secondary" type="submit">Log out</button>
+              <button class="btn btn-info" type="submit">Log out</button>
             </form>
             {% endif %}
           </ul>
