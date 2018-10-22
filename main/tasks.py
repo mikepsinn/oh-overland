@@ -13,11 +13,10 @@ def foobar(self):
 @shared_task
 def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
-    data = get_existing_data(oh_member, 'overland-data.json')
-    batch = get_existing_data(oh_member, fname)
+    data, old_file_id = get_existing_data(oh_member, 'overland-data.json')
+    batch, _ = get_existing_data(oh_member, fname)
     if 'locations' in batch.keys():
         data += batch['locations']
-        oh_member.delete_single_file(file_basename='overland-data.json')
         str_io = io.StringIO()
         json.dump(data, str_io)
         str_io.flush()
@@ -28,11 +27,13 @@ def process_batch(fname, oh_id):
                 'description': 'Summed Overland GPS data',
                 'tags': ['GPS', 'location', 'json', 'processed']})
         oh_member.delete_single_file(file_basename=fname)
+        if old_file_id:
+            oh_member.delete_single_file(file_id=old_file_id)
 
 
 def get_existing_data(oh_member, fname):
     for f in oh_member.list_files():
         if f['basename'] == fname:
             data = requests.get(f['download_url']).json()
-            return data
-    return []
+            return data, f['id']
+    return [], ''

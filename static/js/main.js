@@ -26,7 +26,9 @@ function copyToClipboard(text) {
     }
 }
 
+
 document.querySelector("#copy").onclick = function() {
-    var result = copyToClipboard(new $('code[name=overland_url]')[0].innerText);
-    console.log("copied?", result);
+    var result = $('code[name=overland_url]')[0].innerText;
+    console.log(result);
+    clipboard.writeText(result);
 };
