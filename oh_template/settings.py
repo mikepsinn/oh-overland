@@ -32,6 +32,11 @@ DEBUG = True if os.getenv('DEBUG').lower() == 'true' else False
 # See: https://stackoverflow.com/questions/15128135
 ALLOWED_HOSTS = []
 
+# Check if running on Heroku. If so, force SSL.
+ON_HEROKU = os.getenv('ON_HEROKU', 'false').lower() == 'true'
+if ON_HEROKU:
+    SECURE_SSL_REDIRECT = True
+
 
 # Application definition
 
