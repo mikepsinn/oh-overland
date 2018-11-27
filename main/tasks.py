@@ -3,6 +3,7 @@ from openhumans.models import OpenHumansMember
 from celery import shared_task
 import io
 import json
+import datetime
 
 
 @shared_task(bind=True)
@@ -13,8 +14,10 @@ def foobar(self):
 @shared_task
 def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
-    data, old_file_id = get_existing_data(oh_member, 'overland-data.json')
     batch, _ = get_existing_data(oh_member, fname)
+    f_date = get_date(fname)
+    joined_fname = 'overland-data-{}.json'.format(f_date)
+    data, old_file_id = get_existing_data(oh_member, joined_fname)
     if 'locations' in batch.keys():
         data += batch['locations']
         str_io = io.StringIO()
@@ -37,3 +40,13 @@ def get_existing_data(oh_member, fname):
             data = requests.get(f['download_url']).json()
             return data, f['id']
     return [], ''
+
+
+def get_date(fname):
+    tstamp = int(float(fname.replace(
+                        '.json',
+                        '').replace(
+                            'overland-batch-',
+                            '')))
+    tstamp = datetime.datetime.fromtimestamp(tstamp)
+    return tstamp.strftime('%Y-%m')
