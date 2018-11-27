@@ -75,6 +75,9 @@ def receiver(request, token):
         oluser = OverlandUser.objects.get(endpoint_token=token)
         print('IN RECEIVER FOR {0}'.format(oluser.oh_member.oh_id))
         if request.method == 'POST':
+            ## this is just to temporarily stop adding more batch files!!!
+            return HttpResponse('temp offline')
+            ##
             now = (datetime.now().timestamp())
             fname = 'overland-batch-{}.json'.format(now)
             stream = io.BytesIO(request.body)
@@ -87,7 +90,6 @@ def receiver(request, token):
             process_batch.delay(fname, oluser.oh_member.oh_id)
             return JsonResponse({"result": "ok"})
         else:
-            foobar.delay()
             context = {'overland_endpoint': urllib.parse.urljoin(
                 settings.OPENHUMANS_APP_BASE_URL,
                 token+"/")}
