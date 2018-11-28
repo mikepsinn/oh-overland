@@ -25,7 +25,7 @@ def process_batch(fname, oh_id):
         str_io.flush()
         str_io.seek(0)
         oh_member.upload(
-            stream=str_io, filename='overland-data.json',
+            stream=str_io, filename=joined_fname,
             metadata={
                 'description': 'Summed Overland GPS data',
                 'tags': ['GPS', 'location', 'json', 'processed']})
