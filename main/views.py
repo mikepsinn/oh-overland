@@ -76,7 +76,7 @@ def receiver(request, token):
         print('IN RECEIVER FOR {0}'.format(oluser.oh_member.oh_id))
         if request.method == 'POST':
             ## this is just to temporarily stop adding more batch files!!!
-            return HttpResponse('temp offline')
+            ## return HttpResponse('temp offline')
             ##
             now = (datetime.now().timestamp())
             fname = 'overland-batch-{}.json'.format(now)
