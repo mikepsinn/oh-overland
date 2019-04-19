@@ -34,6 +34,8 @@ def process_batch(fname, oh_id):
             oh_member.delete_single_file(file_basename=fname)
             if old_file_id:
                 oh_member.delete_single_file(file_id=old_file_id)
+    else:
+        oh_member.delete_single_file(file_basename=fname)
 
 
 def get_existing_data(oh_member, fname):
