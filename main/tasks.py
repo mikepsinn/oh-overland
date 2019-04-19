@@ -18,6 +18,7 @@ def process_batch(fname, oh_id):
     f_date = get_date(fname)
     joined_fname = 'overland-data-{}.json'.format(f_date)
     data, old_file_id = get_existing_data(oh_member, joined_fname)
+    print(batch)
     if 'locations' in batch.keys():
         data += batch['locations']
         str_io = io.StringIO()
