@@ -19,20 +19,21 @@ def process_batch(fname, oh_id):
     joined_fname = 'overland-data-{}.json'.format(f_date)
     data, old_file_id = get_existing_data(oh_member, joined_fname)
     print(batch)
-    if 'locations' in batch.keys():
-        data += batch['locations']
-        str_io = io.StringIO()
-        json.dump(data, str_io)
-        str_io.flush()
-        str_io.seek(0)
-        oh_member.upload(
-            stream=str_io, filename=joined_fname,
-            metadata={
-                'description': 'Summed Overland GPS data',
-                'tags': ['GPS', 'location', 'json', 'processed']})
-        oh_member.delete_single_file(file_basename=fname)
-        if old_file_id:
-            oh_member.delete_single_file(file_id=old_file_id)
+    if type(batch) == dict:
+        if 'locations' in batch.keys():
+            data += batch['locations']
+            str_io = io.StringIO()
+            json.dump(data, str_io)
+            str_io.flush()
+            str_io.seek(0)
+            oh_member.upload(
+                stream=str_io, filename=joined_fname,
+                metadata={
+                    'description': 'Summed Overland GPS data',
+                    'tags': ['GPS', 'location', 'json', 'processed']})
+            oh_member.delete_single_file(file_basename=fname)
+            if old_file_id:
+                oh_member.delete_single_file(file_id=old_file_id)
 
 
 def get_existing_data(oh_member, fname):
