@@ -41,8 +41,11 @@ def process_batch(fname, oh_id):
 def get_existing_data(oh_member, fname):
     for f in oh_member.list_files():
         if f['basename'] == fname:
-            data = requests.get(f['download_url']).json()
-            return data, f['id']
+            try:
+                data = requests.get(f['download_url']).json()
+                return data, f['id']
+            except:
+                oh_member.delete_single_file(f['id'])
     return [], ''
 
 
