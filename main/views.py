@@ -87,6 +87,7 @@ def receiver(request, token):
             oluser.oh_member.upload(
                 stream=stream, filename=fname,
                 metadata=metadata)
+            print('UPLOADED BATCH FOR {0}'.format(oluser.oh_member.oh_id))
             process_batch.delay(fname, oluser.oh_member.oh_id)
             return JsonResponse({"result": "ok"})
         else:
