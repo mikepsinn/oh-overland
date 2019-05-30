@@ -16,14 +16,9 @@ def foobar(self):
 def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
     batch = get_batch(oh_member, fname)
-    print('got batch')
     f_date = get_date(fname)
     joined_fname = 'overland-data-{}.csv'.format(f_date)
-    print('getting exsiting data')
     data, old_file_id = get_existing_data(oh_member, joined_fname)
-    print('got exsiting data')
-    print('batch:')
-    print(batch)
     if type(batch) == dict:
         if 'locations' in batch.keys():
             print('generate new CSV data')
@@ -39,7 +34,7 @@ def process_batch(fname, oh_id):
                 stream=str_io, filename=joined_fname,
                 metadata={
                     'description': 'Summed Overland GPS data',
-                    'tags': ['GPS', 'location', 'json', 'processed']})
+                    'tags': ['GPS', 'location', 'CSV', 'processed']})
             oh_member.delete_single_file(file_basename=fname)
             if old_file_id:
                 oh_member.delete_single_file(file_id=old_file_id)
