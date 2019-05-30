@@ -16,11 +16,15 @@ def foobar(self):
 def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
     batch, _ = get_existing_data(oh_member, fname)
+    print('got batch')
     f_date = get_date(fname)
     joined_fname = 'overland-data-{}.csv'.format(f_date)
+    print('getting exsiting data')
     data, old_file_id = get_existing_data(oh_member, joined_fname)
+    print('got exsiting data')
     if type(batch) == dict:
         if 'locations' in batch.keys():
+            print('generate new CSV data')
             new_data = generate_csv(batch)
             if data:
                 new_data = pandas.concat(
