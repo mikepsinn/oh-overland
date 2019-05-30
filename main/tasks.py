@@ -15,7 +15,7 @@ def foobar(self):
 @shared_task
 def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
-    batch, _ = get_existing_data(oh_member, fname)
+    batch = get_batch(oh_member, fname)
     print('got batch')
     f_date = get_date(fname)
     joined_fname = 'overland-data-{}.csv'.format(f_date)
@@ -45,6 +45,17 @@ def process_batch(fname, oh_id):
                 oh_member.delete_single_file(file_id=old_file_id)
     else:
         oh_member.delete_single_file(file_basename=fname)
+
+
+def get_batch(oh_member, fname):
+    for f in oh_member.list_files():
+        if f['basename'] == fname:
+            try:
+                data = requests.get(f['download_url']).json()
+                return data
+            except:
+                oh_member.delete_single_file(f['id'])
+                return []
 
 
 def get_existing_data(oh_member, fname):
