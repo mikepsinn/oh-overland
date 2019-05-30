@@ -2,8 +2,9 @@ import requests
 from openhumans.models import OpenHumansMember
 from celery import shared_task
 import io
-import json
 import datetime
+import pandas
+from .helpers import generate_csv
 
 
 @shared_task(bind=True)
@@ -14,23 +15,26 @@ def foobar(self):
 @shared_task
 def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
-    batch, _ = get_existing_data(oh_member, fname)
+    batch = get_batch(oh_member, fname)
     f_date = get_date(fname)
-    joined_fname = 'overland-data-{}.json'.format(f_date)
+    joined_fname = 'overland-data-{}.csv'.format(f_date)
     data, old_file_id = get_existing_data(oh_member, joined_fname)
-    print(batch)
     if type(batch) == dict:
         if 'locations' in batch.keys():
-            data += batch['locations']
+            print('generate new CSV data')
+            new_data = generate_csv(batch)
+            if type(data) == pandas.core.frame.DataFrame:
+                new_data = pandas.concat(
+                    [data, new_data]).reset_index(drop=True)
             str_io = io.StringIO()
-            json.dump(data, str_io)
+            new_data.to_csv(str_io, index=False)
             str_io.flush()
             str_io.seek(0)
             oh_member.upload(
                 stream=str_io, filename=joined_fname,
                 metadata={
                     'description': 'Summed Overland GPS data',
-                    'tags': ['GPS', 'location', 'json', 'processed']})
+                    'tags': ['GPS', 'location', 'CSV', 'processed']})
             oh_member.delete_single_file(file_basename=fname)
             if old_file_id:
                 oh_member.delete_single_file(file_id=old_file_id)
@@ -38,15 +42,24 @@ def process_batch(fname, oh_id):
         oh_member.delete_single_file(file_basename=fname)
 
 
-def get_existing_data(oh_member, fname):
+def get_batch(oh_member, fname):
     for f in oh_member.list_files():
         if f['basename'] == fname:
             try:
                 data = requests.get(f['download_url']).json()
-                return data, f['id']
+                return data
             except:
                 oh_member.delete_single_file(f['id'])
-    return [], ''
+                return []
+
+
+def get_existing_data(oh_member, fname):
+    for f in oh_member.list_files():
+        if f['basename'] == fname:
+            data = requests.get(f['download_url']).content
+            data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
+            return data, f['id']
+    return None, ''
 
 
 def get_date(fname):
