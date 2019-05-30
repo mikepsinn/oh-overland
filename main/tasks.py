@@ -28,7 +28,7 @@ def process_batch(fname, oh_id):
         if 'locations' in batch.keys():
             print('generate new CSV data')
             new_data = generate_csv(batch)
-            if data:
+            if data not None:
                 new_data = pandas.concat(
                     [data, new_data]).reset_index(drop=True)
             str_io = io.StringIO()
