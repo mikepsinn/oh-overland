@@ -22,6 +22,8 @@ def process_batch(fname, oh_id):
     print('getting exsiting data')
     data, old_file_id = get_existing_data(oh_member, joined_fname)
     print('got exsiting data')
+    print('batch:')
+    print(batch)
     if type(batch) == dict:
         if 'locations' in batch.keys():
             print('generate new CSV data')
