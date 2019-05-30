@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
 from openhumans.models import OpenHumansMember
-from .tasks import process_batch, foobar
+from .tasks import process_batch
 from .models import OverlandUser
 from datetime import datetime
 
@@ -75,9 +75,9 @@ def receiver(request, token):
         oluser = OverlandUser.objects.get(endpoint_token=token)
         print('IN RECEIVER FOR {0}'.format(oluser.oh_member.oh_id))
         if request.method == 'POST':
-            ## this is just to temporarily stop adding more batch files!!!
-            return HttpResponse('temp offline')
-            ##
+            # this is just to temporarily stop adding more batch files!!!
+            # return HttpResponse('temp offline')
+            #
             now = (datetime.now().timestamp())
             fname = 'overland-batch-{}.json'.format(now)
             stream = io.BytesIO(request.body)

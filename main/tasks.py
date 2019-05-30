@@ -2,8 +2,9 @@ import requests
 from openhumans.models import OpenHumansMember
 from celery import shared_task
 import io
-import json
 import datetime
+import pandas
+from .helpers import generate_csv
 
 
 @shared_task(bind=True)
@@ -16,14 +17,16 @@ def process_batch(fname, oh_id):
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
     batch, _ = get_existing_data(oh_member, fname)
     f_date = get_date(fname)
-    joined_fname = 'overland-data-{}.json'.format(f_date)
+    joined_fname = 'overland-data-{}.csv'.format(f_date)
     data, old_file_id = get_existing_data(oh_member, joined_fname)
-    print(batch)
     if type(batch) == dict:
         if 'locations' in batch.keys():
-            data += batch['locations']
+            new_data = generate_csv(batch)
+            if data:
+                new_data = pandas.concat(
+                    [data, new_data]).reset_index(drop=True)
             str_io = io.StringIO()
-            json.dump(data, str_io)
+            new_data.to_csv(str_io, index=False)
             str_io.flush()
             str_io.seek(0)
             oh_member.upload(
@@ -41,12 +44,10 @@ def process_batch(fname, oh_id):
 def get_existing_data(oh_member, fname):
     for f in oh_member.list_files():
         if f['basename'] == fname:
-            try:
-                data = requests.get(f['download_url']).json()
-                return data, f['id']
-            except:
-                oh_member.delete_single_file(f['id'])
-    return [], ''
+            data = requests.get(f['download_url']).content
+            data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
+            return data, f['id']
+    return None, ''
 
 
 def get_date(fname):
