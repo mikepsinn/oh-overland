@@ -14,6 +14,7 @@ def foobar(self):
 
 @shared_task
 def process_batch(fname, oh_id):
+    print('task processing {}'.format(oh_id))
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
     batch = get_batch(oh_member, fname)
     f_date = get_date(fname)
@@ -56,6 +57,8 @@ def get_batch(oh_member, fname):
 def get_existing_data(oh_member, fname):
     for f in oh_member.list_files():
         if f['basename'] == fname:
+            print('task processing file:')
+            print(f)
             data = requests.get(f['download_url']).content
             data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
             return data, f['id']
