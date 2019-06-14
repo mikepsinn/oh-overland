@@ -30,7 +30,7 @@ def process_batch(fname, oh_id):
                 new_data = pandas.concat(
                     [data, new_data]).reset_index(drop=True)
             str_io = io.StringIO()
-            new_data.to_csv(str_io, index=False)
+            new_data.to_csv(str_io, index=False, encoding='utf-8')
             str_io.flush()
             str_io.seek(0)
             oh_member.upload(
@@ -67,7 +67,8 @@ def get_existing_data(oh_member, fname):
             print(f)
             data = requests.get(f['download_url']).content
             print('got data')
-            data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
+            data = pandas.read_csv(io.StringIO(
+                data.decode('utf-8', errors='ignore')))
             print('read CSV')
             return data, f['id']
     return None, ''
