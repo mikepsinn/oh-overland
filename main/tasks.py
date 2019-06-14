@@ -66,8 +66,9 @@ def get_existing_data(oh_member, fname):
             print('task processing file:')
             print(f)
             data = requests.get(f['download_url']).content
-            data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
             print('got data')
+            data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
+            print('read CSV')
             return data, f['id']
     return None, ''
 
