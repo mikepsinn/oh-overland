@@ -20,6 +20,7 @@ def process_batch(fname, oh_id):
     f_date = get_date(fname)
     joined_fname = 'overland-data-{}.csv'.format(f_date)
     data, old_file_id = get_existing_data(oh_member, joined_fname)
+    print('got data for {}'.format(oh_id))
     if type(batch) == dict:
         if 'locations' in batch.keys():
             print('generate new CSV data')
@@ -39,6 +40,8 @@ def process_batch(fname, oh_id):
             oh_member.delete_single_file(file_basename=fname)
             if old_file_id:
                 oh_member.delete_single_file(file_id=old_file_id)
+        else:
+            oh_member.delete_single_file(file_id=old_file_id)
     else:
         oh_member.delete_single_file(file_basename=fname)
 
