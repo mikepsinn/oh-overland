@@ -22,6 +22,7 @@ def process_batch(fname, oh_id):
     data, old_file_id = get_existing_data(oh_member, joined_fname)
     print('got data for {}'.format(oh_id))
     if type(batch) == dict:
+        print('batch is dict')
         if 'locations' in batch.keys():
             print('generate new CSV data')
             new_data = generate_csv(batch)
@@ -41,8 +42,10 @@ def process_batch(fname, oh_id):
             if old_file_id:
                 oh_member.delete_single_file(file_id=old_file_id)
         else:
+            print('batch is not locations')
             oh_member.delete_single_file(file_id=old_file_id)
     else:
+        print('batch is not dict')
         oh_member.delete_single_file(file_basename=fname)
 
 
