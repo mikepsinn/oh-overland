@@ -67,6 +67,7 @@ def get_existing_data(oh_member, fname):
             print(f)
             data = requests.get(f['download_url']).content
             data = pandas.read_csv(io.StringIO(data.decode('utf-8')))
+            print('got data')
             return data, f['id']
     return None, ''
 
