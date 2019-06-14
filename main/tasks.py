@@ -17,12 +17,12 @@ def process_batch(fname, oh_id):
     print('task processing {}'.format(oh_id))
     oh_member = OpenHumansMember.objects.get(oh_id=oh_id)
     batch = get_batch(oh_member, fname)
-    f_date = get_date(fname)
-    joined_fname = 'overland-data-{}.csv'.format(f_date)
-    data, old_file_id = get_existing_data(oh_member, joined_fname)
-    print('got data for {}'.format(oh_id))
     if type(batch) == dict:
         print('batch is dict')
+        f_date = get_date(fname)
+        joined_fname = 'overland-data-{}.csv'.format(f_date)
+        data, old_file_id = get_existing_data(oh_member, joined_fname)
+        print('got data for {}'.format(oh_id))
         if 'locations' in batch.keys():
             print('generate new CSV data')
             new_data = generate_csv(batch)
