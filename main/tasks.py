@@ -2,7 +2,6 @@ import requests
 from openhumans.models import OpenHumansMember
 from celery import shared_task
 import io
-import datetime
 import pandas
 from .helpers import generate_csv
 
@@ -19,7 +18,7 @@ def process_batch(fname, oh_id):
     batch = get_batch(oh_member, fname)
     if type(batch) == dict:
         print('batch is dict')
-        f_date = get_date(fname)
+        f_date = get_date(batch)
         joined_fname = 'overland-data-{}.csv'.format(f_date)
         data, old_file_id = get_existing_data(oh_member, joined_fname)
         print('got data for {}'.format(oh_id))
@@ -74,11 +73,7 @@ def get_existing_data(oh_member, fname):
     return None, ''
 
 
-def get_date(fname):
-    tstamp = int(float(fname.replace(
-                        '.json',
-                        '').replace(
-                            'overland-batch-',
-                            '')))
-    tstamp = datetime.datetime.fromtimestamp(tstamp)
-    return tstamp.strftime('%Y-%m')
+def get_date(batch):
+    location = batch['locations'][0]  # get first location entry
+    timestamp = location['properties']['timestamp'][:7]  # extract year-month
+    return timestamp
