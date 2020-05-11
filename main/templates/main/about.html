@@ -79,7 +79,7 @@
           </div>
           <div class="panel-body">
             <p>
-              With this application you can create an API endpoint for the <i>Overland</i> iOS app to push your location data into your <i>Open Humans</i> account.
+              With this application you can create an API endpoint for the <i>Overland</i> app to push your location data into your <i>Open Humans</i> account.
           </div>
         </div>
         <div class="panel panel-default">
@@ -91,7 +91,7 @@
             You can log-in into this application with your <i>Open Humans</i> account. This allows us to deposit data in your <i>Open Humans</i> account.
           </p>
           <p>
-            Logging in also creates a unique URL that you can use as the `receiver endpoint` in the <i>Overland</i> iOS application. Everytime you then push data from the iOS app to this endpoint we will
+            Logging in also creates a unique URL that you can use as the <code>receiver endpoint</code> in the <i>Overland</i> application. Everytime you then push data from the iOS app to this endpoint we will
             add this data to your growing <i>Overland</i> location history record on <i>Open Humans</i>.
           </p>
           </div>
@@ -102,8 +102,10 @@
           </div>
           <div class="panel-body">
           <p>
-            <a href='https://overland.p3k.app/download'>You can download <i>Overland</i> on the App Store</a>, it is free and <a href="https://github.com/aaronpk/Overland-iOS"> open source</a>!
+            <i>Overland</i> is available for both <a href='https://overland.p3k.app/download'><i>iOS</i> on the App Store</a> and <a href="https://play.google.com/store/apps/details?id=com.openhumans.app.overland"><i>Android</i> on the Google Play store</a>.
           </p>
+          <p>
+            The app is free and open source. See the code for the <a href="https://github.com/aaronpk/Overland-iOS">iOS version</a> and the <a href="https://github.com/OpenHumans/overland_android">Android version</a>.
           </div>
         </div>
         <div class="panel panel-default">
@@ -123,8 +125,16 @@
               <li>You are done now. Don't forget to turn on <i>Tracking Enabled</i></li>
             </ul>
             {% load static %}
+            <h3>For <i>iOS</i></h3>
+            <p>
             <img width="49%" src="{% static 'img/howto1.jpg'%}"/>
             <img width="49%" src="{% static 'img/howto2.jpg'%}"/>
+            </p>
+            <h3>For <i>Android</i></h3>
+            <p>
+            <img width="49%" src="{% static 'img/howto-android1.jpg'%}"/>
+            <img width="49%" src="{% static 'img/howto-android2.jpg'%}"/>
+            </p>
           </p>
         </div>
       </div>
