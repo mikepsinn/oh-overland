@@ -18,3 +18,4 @@ https://devcenter.heroku.com/categories/command-line
 1. `pipenv run python manage.py collectstatic`
 1. `pipenv run python manage.py migrate`
 1. run `heroku local` or `pipenv run python manage.py runserver`
+1. If using Gitpod, make sure to open port 8000 as shown: https://prnt.sc/15mlqwp
